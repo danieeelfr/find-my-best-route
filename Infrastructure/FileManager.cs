@@ -8,9 +8,9 @@ namespace Infrastructure
 {
     public class FileManager
     {
-        public List<Route> GetRoutes(String filepath)
+        public List<string> GetFileData(String filepath)
         {
-            List<Route> routes = new List<Route>();
+            List<string> data = new List<string>();
 
             String line;
             try
@@ -21,13 +21,9 @@ namespace Infrastructure
 
                 while (line != null)
                 {
-                    List<string> values = new List<string>(line.Split(new string[] { "," }, StringSplitOptions.None));
-                    Route route = new Route();
-                    route.setFrom(values[0]);
-                    route.setTo(values[1]);
-                    route.setPrice(Convert.ToDouble(values[2]));
-
-                    routes.Add(route);
+                    // List<string> item = new List<string>(line);
+                    data.Add(line);
+                
                     line = sr.ReadLine();
                 }
                 sr.Close();
@@ -37,7 +33,7 @@ namespace Infrastructure
                 Console.WriteLine("Exception: " + e.Message);
             }
             
-            return routes;
+            return data;
         }
     }
 }
