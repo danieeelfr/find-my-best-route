@@ -8,14 +8,14 @@ namespace Infrastructure
 {
     public class FileManager
     {
-        public List<Route> GetRoutes()
+        public List<Route> GetRoutes(String filepath)
         {
             List<Route> routes = new List<Route>();
 
             String line;
             try
             {
-                StreamReader sr = new StreamReader("/home/danielfr/Desktop/test/input-file.txt");
+                StreamReader sr = new StreamReader(filepath);
 
                 line = sr.ReadLine();
 

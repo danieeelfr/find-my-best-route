@@ -20,7 +20,7 @@ namespace Infrastructure.Tests
         [Fact]
         public void Test1()
         {
-            List<Route> routes = _fileManager.GetRoutes();
+            List<Route> routes = _fileManager.GetRoutes("/home/danielfr/Desktop/test/input-file.txt");
             Console.WriteLine("routes tested: " + routes.Count);
 
             routes.ForEach(x => {
