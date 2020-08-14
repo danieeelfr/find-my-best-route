@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using Core.Services;
+using System.IO;
+using System.Text;
 using Core.Models;
 using Infrastructure;
 using System.Linq;
@@ -10,8 +12,10 @@ namespace Services
 {
     public class RouteService : IRouteService
     {
+        // private const string FILE_PATH = "/home/daniel/Workspace/find-my-best-route/Resources/input-file.txt";
 
-        private const string FILE_PATH = "/home/daniel/Workspace/find-my-best-route/Resources/input-file.txt";
+        private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
+
         private readonly FileManager _fileManager;
         private Dictionary<int, List<Route>> possibleRoutes;
         private List<Route> partialRoutes;
@@ -36,127 +40,59 @@ namespace Services
             foreach (var possibleRoute in possibleRoutes)
             {
                 Console.WriteLine("Index: " + possibleRoute.Key);
-
+                StringBuilder sb = new StringBuilder();
                 foreach (var route in possibleRoute.Value)
                 {
-                    Console.WriteLine("Route found..." + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
+                    sb.Append(route.getFrom() + " - " + route.getTo() + " - ");
+                    // Console.WriteLine("Route found..." + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
                 }
+                Console.WriteLine(sb.ToString());
             }
 
             return new Route();
         }
 
-        private void SetAllPossibleRoutes(String from, String to)
+        private void SetAllPossibleRoutes(String from, String to, int index = 1)
         {
 
-            var index = 1;
+            // var index = 1;
             foreach (Route route in allRoutes)
             {
+                index++;
+
                 if (route.getFrom().Equals(from) &&
                    route.getTo().Equals(to))
                 {
                     var directRoutes = new List<Route>();
                     directRoutes.Add(route);
                     possibleRoutes.Add(index, directRoutes);
+                    partialRoutes.Clear();
 
-                    index++;
-                    //return;
+                    continue;
                 }
 
                 // check who arrive there
-                if (route.getTo().Equals(to))
+                if (route.getTo().Equals(to) || route.getFrom().Equals(from))
                 {
                     partialRoutes.Add(route);
 
-                    Console.WriteLine("Partial " + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
-                    
-                    SetAllPossibleRoutes(route.getTo(), route.getFrom());
-                }
-            }
-        }
+                    // Console.WriteLine("Partial " + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
 
-        private void SetPossibleRoutes(List<Route> routes, String from, String to)
-        {
-            List<Route> allRoutes = routes;
-            List<Route> partialRoutes = new List<Route>();
-
-            int index = 1;
-            var partialRoute = new List<Route>();
-            foreach (Route route in routes)
-            {
-                // check direct route
-                if (route.getFrom().Equals(from) &&
-                    route.getTo().Equals(to))
-                {
-                    var directRoutes = new List<Route>();
-                    directRoutes.Add(route);
-                    possibleRoutes.Add(index, directRoutes);
-                    partialRoutes.Clear();
-                    index++;
-                    return;
-                }
-
-                // check how arrived there
-                if (route.getTo().Equals(to) &&
-                    !route.getFrom().Equals(from))
-                {
-
-                    partialRoute.Add(route);
-
-                    var nextRoutes = routes.FindAll(x => x.getFrom().Equals(route.getTo()));
-
-                    foreach (var r in nextRoutes)
+                    // check the start point
+                    if (route.getFrom().Equals(from) &&
+                        !route.getTo().Equals(to))
                     {
-                        // check how arrived there
-                        if (r.getTo().Equals(to) &&
-                            !r.getFrom().Equals(from))
-                        {
-                            partialRoute.Add(route);
-                        }
-
-
+                        possibleRoutes.Add(index, new List<Route>(partialRoutes));
+                        partialRoutes.Clear();
+                        continue;
                     }
-
-                    // possibleRoutes.Add(index, partialRoute);
-                    partialRoutes.Clear();
-                    index++;
-                    return;
-
-                    partialRoutes.Add(route);
-
-
+                    else
+                    {
+                        SetAllPossibleRoutes(route.getTo(), route.getFrom(), index);
+                    }
                 }
             }
-
-
-            // routes
-            // //.Where(route => route.getTo().Equals(to))
-            // .Select(route => route)
-            // .ToList()
-            // .ForEach(route =>
-            // {  
-            //     Console.WriteLine("Routes size: " + allRoutes.Count);
-            //     allRoutes.Remove(route);
-
-            //     if ((route.getTo().Equals(to) || 
-            //          route.getFrom().Equals(from)))
-            //     {
-            //         Console.WriteLine("Route found..." + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
-            //         possibleRoutes.AddRange(partialRoutes);
-            //         var temp = partialRoutes;
-            //         result.Insert(0, temp);
-
-            //         partialRoutes.RemoveAll(r => r != null); 
-
-            //     } else {
-
-            //     }
-
-            //});
-
-
         }
-
         private List<Route> GetAllRoutes(String filepath)
         {
             List<string> data = _fileManager.GetFileData(filepath);
