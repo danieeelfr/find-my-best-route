@@ -22,7 +22,7 @@ namespace Services.Tests
         {
             Route route = _routeService.GetBestRoute("GRU", "CDG");
 
-            Console.WriteLine(route);
+          //  Console.WriteLine(route);
 
             
         }
