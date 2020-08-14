@@ -20,12 +20,11 @@ namespace Services.Tests
         [Fact]
         public void Test1()
         {
-            List<Route> routes = _routeService.GetAllRoutes("/home/danielfr/Desktop/test/input-file.txt");
+            Route route = _routeService.GetBestRoute("GRU", "CDG");
 
-            routes.ForEach(x =>
-            {
-                Console.WriteLine(x.getFrom() + "," + x.getTo() + "," + x.getPrice());
-            });
+            Console.WriteLine(route);
+
+            
         }
     }
 }

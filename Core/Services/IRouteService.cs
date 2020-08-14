@@ -7,9 +7,7 @@ namespace Core.Services
 {
     public interface IRouteService
     {
-        List<Route> GetAllRoutes(String filepath);
-
-        Route GetBestRoute(String from, String to, List<Route> routes);
+        Route GetBestRoute(String from, String to);
 
         void AddRoutes(List<Route> routes);
 

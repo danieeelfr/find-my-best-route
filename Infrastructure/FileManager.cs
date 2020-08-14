@@ -21,9 +21,7 @@ namespace Infrastructure
 
                 while (line != null)
                 {
-                    // List<string> item = new List<string>(line);
                     data.Add(line);
-                
                     line = sr.ReadLine();
                 }
                 sr.Close();
