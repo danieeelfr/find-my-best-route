@@ -38,5 +38,9 @@ namespace Core.Models
             this.Price = Price;
         }
 
+        public override string ToString()
+        {
+            return $"{this.From} {this.To} {this.Price}";
+        }
     }
 }

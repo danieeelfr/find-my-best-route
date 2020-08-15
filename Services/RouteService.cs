@@ -17,8 +17,10 @@ namespace Services
         private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
 
         private readonly FileManager _fileManager;
-        private Dictionary<int, List<Route>> possibleRoutes;
+        private Dictionary<List<Route>, int> possibleRoutes;
         private List<Route> partialRoutes;
+
+        private List<string> result;
 
         private List<Route> allRoutes;
 
@@ -30,69 +32,91 @@ namespace Services
         public Route GetBestRoute(String from, String to)
         {
             allRoutes = GetAllRoutes(FILE_PATH);
+            var sb = new StringBuilder();
 
-            possibleRoutes = new Dictionary<int, List<Route>>();
-            partialRoutes = new List<Route>();
-
-            // SetPossibleRoutes(allRoutes, from, to);
-            SetAllPossibleRoutes(from, to);
-
-            foreach (var possibleRoute in possibleRoutes)
+            var directRoutes = allRoutes.FindAll(route =>
             {
-                Console.WriteLine("Index: " + possibleRoute.Key);
-                StringBuilder sb = new StringBuilder();
-                foreach (var route in possibleRoute.Value)
-                {
-                    sb.Append(route.getFrom() + " - " + route.getTo() + " - ");
-                    // Console.WriteLine("Route found..." + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
-                }
-                Console.WriteLine(sb.ToString());
+                return route.getFrom().Equals(from) && route.getTo().Equals(to);
+            });
+
+            foreach (var directRoute in directRoutes)
+            {
+                sb.AppendLine($"{directRoute.getFrom()} - {directRoute.getTo()}");
             }
+
+            var startRoutes = allRoutes.FindAll(route =>
+           {
+               return route.getFrom().Equals(from);
+           });
+
+            partialRoutes = new List<Route>();
+            possibleRoutes = new Dictionary<List<Route>, int>();
+            foreach (var route in startRoutes)
+            {
+                partialRoutes.Add(route);
+                GetNextConnection(from, to, route);
+            }
+
+
+
 
             return new Route();
         }
 
-        private void SetAllPossibleRoutes(String from, String to, int index = 1)
+        private void GetNextConnection(String from, String to, Route route)
         {
 
-            // var index = 1;
-            foreach (Route route in allRoutes)
+            var connections = allRoutes.FindAll(r =>
             {
-                index++;
+                return r.getFrom().Equals(route.getTo());
+            });
 
-                if (route.getFrom().Equals(from) &&
-                   route.getTo().Equals(to))
+            foreach (var connection in connections)
+            {
+                if (connection.getTo().Equals(to))
                 {
-                    var directRoutes = new List<Route>();
-                    directRoutes.Add(route);
-                    possibleRoutes.Add(index, directRoutes);
+                    partialRoutes.Add(connection);
+                    Console.WriteLine("connection end found");
+                    possibleRoutes.Add(new List<Route>(partialRoutes), 99);
                     partialRoutes.Clear();
-
                     continue;
                 }
-
-                // check who arrive there
-                if (route.getTo().Equals(to) || route.getFrom().Equals(from))
+                else
                 {
-                    partialRoutes.Add(route);
-
-                    // Console.WriteLine("Partial " + route.getFrom() + " - " + route.getTo() + " - " + route.getPrice());
-
-                    // check the start point
-                    if (route.getFrom().Equals(from) &&
-                        !route.getTo().Equals(to))
+                    Console.WriteLine("connection partial found");
+                    partialRoutes.Add(new Route()
                     {
-                        possibleRoutes.Add(index, new List<Route>(partialRoutes));
-                        partialRoutes.Clear();
-                        continue;
-                    }
-                    else
-                    {
-                        SetAllPossibleRoutes(route.getTo(), route.getFrom(), index);
-                    }
+                        From = connection.getFrom(),
+                        To = connection.getTo()
+                    });
+                    GetNextConnection(from, to, connection);
                 }
             }
         }
+
+        private List<String> GetConnections(String from)
+        {
+            List<String> result = null;
+
+            var connections = allRoutes.FindAll(route =>
+            {
+                return route.getTo().Equals(from);
+            });
+
+            if (connections.Count() > 0)
+            {
+                result = new List<String>();
+
+                foreach (var connection in connections)
+                {
+                    result.Add(connection.getFrom());
+                }
+            }
+
+            return result;
+        }
+
+
         private List<Route> GetAllRoutes(String filepath)
         {
             List<string> data = _fileManager.GetFileData(filepath);
