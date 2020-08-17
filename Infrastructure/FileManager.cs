@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using Core;
 using Core.Models;
 using System.Collections.Generic;
@@ -26,12 +27,40 @@ namespace Infrastructure
                 }
                 sr.Close();
             }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return data;
+        }
+
+        public void AddData(String filePath, List<string> data, bool append)
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(filePath, append, Encoding.ASCII);
+
+                foreach (var line in data)
+                {
+                    if (!append)
+                    {
+                        sw.Flush();
+                        sw.WriteLine($"{line}");
+                    }
+                    else
+                    {
+                        sw.NewLine = $"{line}";
+                        sw.WriteLine();
+                    }
+                }
+                
+                sw.Close();
+            }
             catch (Exception e)
             {
                 Console.WriteLine("Exception: " + e.Message);
             }
-            
-            return data;
         }
     }
 }

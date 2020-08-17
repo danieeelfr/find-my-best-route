@@ -18,9 +18,6 @@ namespace Services
         private readonly FileManager _fileManager;
         private Dictionary<List<Route>, double> possibleRoutes;
         private List<Route> partialRoutes;
-
-        private List<string> result;
-
         private List<Route> allRoutes;
 
         public RouteService()
@@ -148,20 +145,15 @@ namespace Services
 
         public void AddRoutes(List<Route> routes, String filePath)
         {
-            try
+            List<string> data = new List<string>();
+
+            foreach (var route in routes)
             {
-                StreamWriter sw = new StreamWriter(filePath, true, Encoding.ASCII);
-                foreach (var route in routes)
-                {
-                    sw.NewLine = $"\n{route.getFrom()},{route.getTo()},{route.getPrice()}";
-                    sw.WriteLine();
-                }
-                sw.Close();
+                data.Add($"{route.getFrom()},{route.getTo()},{route.getPrice()}");
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception: " + e.Message);
-            }
+
+            _fileManager.AddData(filePath, data, true);
+
         }
     }
 }
