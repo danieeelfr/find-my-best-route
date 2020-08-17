@@ -1,20 +1,8 @@
-<!-- # Tech Challenge - API 1 (rate-services-api)
+# Tech Challenge - find-my-best-route
 
 ## Solution overview
 
-![overview](Resources/Img/api1.png)
-
-## DevOps flow
-
-![devops](Resources/Img/devops.png)
-
-### Continuous integration pipeline
-
-![devops](Resources/Img/ci.gif)
-
-### Continuous delivery pipeline
-
-![devops](Resources/Img/delivery.gif)
+![overview](Resources/overview.png)
 
 ## Quality assurance
 
@@ -24,43 +12,18 @@
 
 ## Running tests
 
-### Unit and/or Integrated tests
+### Unit tests 
+#### testing Services and Infrastructure layers
 
 ```
 dotnet test
 ```
 
-### With coverage
+## Running the Console application
+#### * ensure that the file path is correct
 
 ```
-dotnet test \                    
-  --configuration Development \
-  /p:CollectCoverage=true \
-  /p:CoverletOutputFormat=cobertura \
-  /p:CoverletOutput=./TestResults/Coverage/
-```
-
-### Coverage report
-
-```
-dotnet tool run reportgenerator \
-  -reports:./TestResults/Coverage/coverage.cobertura.xml \
-  -targetdir:./CodeCoverage \
-  -reporttypes:HtmlInline_AzurePipelines
-```
-
-## Dockering
-
-### Build an docker image locally
-
-```
-docker build --pull --rm -f "Dockerfile" -t rate-services-api:latest "."
-```
-
-### Running the docker image in a locally container
-
-```
-docker run --rm -d  -p 5000:5000/tcp -p 5001:5001/tcp rate-services-api:latest
+dotnet run --project ConsoleApplication "C:\Resources\input-file.txt"
 ```
 
 ## API documentation with Swagger
@@ -75,23 +38,6 @@ http://localhost:5000/index.html
 * .NET Tools
 * C#
 * GitHub
-* Jwt
-* Microsoft Azure
 * Swagger
 * Ubuntu 18.3
 * Visual Studio Code
-
-## What I've learning?
-
-* Azure - Apps for containers
-* Azure DevOps - Continuous integration (CI)
-* Azure DevOps - Continuous delivery (CD)
-* Azure DevOps - Quality analisys & coverage reports
-* Developing .NET applications using Ubuntu and vscode.
-* Docker - dockering .NET applications
-* Docker - Azure Container Registry
-* GitHub actions (not applied)
-* Integration tests
-* Pact tests (not applied)
-* Unit tests with xUnity
-* Whimsical (draws and diagrams) -->
