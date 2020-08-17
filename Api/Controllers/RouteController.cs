@@ -25,7 +25,8 @@ namespace Api.Controllers
         public String GetBestRoute(Route route, String filePath)
         {
             if (String.IsNullOrWhiteSpace(filePath)) {
-                filePath = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
+                
+                filePath = "Api/Resources/input-file.txt";
             }
            return _routeService.GetBestRoute(route.getFrom(), route.getTo(), filePath);
         }
