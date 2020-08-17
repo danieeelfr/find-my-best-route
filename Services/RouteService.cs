@@ -13,7 +13,6 @@ namespace Services
     public class RouteService : IRouteService
     {
         // private const string FILE_PATH = "/home/daniel/Workspace/find-my-best-route/Resources/input-file.txt";
-
         // private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
 
         private readonly FileManager _fileManager;
@@ -71,7 +70,6 @@ namespace Services
             foreach (var stop in bestRoute)
             {
                 result.Add(stop.getFrom());
-                // result.Add(stop.getTo());
             }
 
             var sb = new StringBuilder();
@@ -84,9 +82,6 @@ namespace Services
             sb.Append(to);
 
             return sb.ToString();
-
-
-
 
         }
 
@@ -159,7 +154,6 @@ namespace Services
                 foreach (var route in routes)
                 {
                     sw.NewLine = $"\n{route.getFrom()},{route.getTo()},{route.getPrice()}";
-
                     sw.WriteLine();
                 }
                 sw.Close();

@@ -7,22 +7,25 @@ namespace ConsoleApplication
     {
         static void Main(string[] args)
         {
+            Console.Clear();
+
             if (args.Length == 0)
             {
-                Console.WriteLine("Please try again informing the routes file path...");
+                Console.Beep();
+                Console.WriteLine("\nPlease enter the route: [FROM-TO] - or type exit to finish");
                 return;
             }
 
-            while (true) // Loop indefinitely
+            while (true)
             {
                 var routeService = new RouteService();
 
-                Console.WriteLine("Please enter the route: ");
+                Console.WriteLine("\nPlease enter the route: [FROM-TO] - or type exit to finish");
                 var route = Console.ReadLine();
 
-                if (route.Equals("exit")) // Check string
+                if (route.Equals("exit"))
                 {
-                    Console.WriteLine("Finished...");
+                    Console.WriteLine("\nFinished...");
                     break;
                 }
 
@@ -32,11 +35,18 @@ namespace ConsoleApplication
                 {
                     var filePath = args[0];
                     var bestRoute = routeService.GetBestRoute($"{splittedRoute[0]}", $"{splittedRoute[1]}", filePath);
-                    Console.WriteLine($"best route: {bestRoute}");
+                    Console.Clear();
+                    Console.BackgroundColor = ConsoleColor.DarkBlue;
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"\nBest route: {bestRoute}");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                    Console.WriteLine("\n\nPlease a new route: [FROM-TO] - or type exit to finish");
                 }
                 else
                 {
-                    Console.WriteLine("Please try again informing a valid route (FROM,TO) or type exit to finish...");
+                    Console.Beep();
+                    Console.WriteLine("\nPlease try again informing a valid route (FROM,TO) or type exit to finish...");
                 }
 
                 Console.ReadKey();
