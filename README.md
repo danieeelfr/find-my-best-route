@@ -45,12 +45,6 @@ https://localhost:5001/index.html
 http://localhost:5000/index.html
 ```
 
-## API documentation with Swagger
-
-```
-http://localhost:5000/index.html
-```
-
 ## Request examples
 #### Add new routes (POST)
 ##### expect a list with one or more routes to be added
@@ -58,7 +52,7 @@ http://localhost:5000/index.html
 curl -X POST "https://localhost:5001/Route?filePath=Resources/input-file.txt" -H "accept: */*" -H "Content-Type: application/json" -d "[{\"from\":\"bhz\",\"to\":\"bru\",\"price\":10}]"
 ```
 
-#### Get the Best Route (GET)
+#### Get the Best Route between two points (GET)
 ```
 curl -X GET "https://localhost:5001/Route/bhz/bru?filePath=Resources/input-file.txt" -H "accept: text/plain"
 ```
