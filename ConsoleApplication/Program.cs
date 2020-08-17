@@ -36,9 +36,19 @@ namespace ConsoleApplication
                     var filePath = args[0];
                     var bestRoute = routeService.GetBestRoute($"{splittedRoute[0]}", $"{splittedRoute[1]}", filePath);
                     Console.Clear();
-                    Console.BackgroundColor = ConsoleColor.DarkBlue;
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine($"\nBest route: {bestRoute}");
+
+                    if (!bestRoute.Contains("No route found"))
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkRed;
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+
+                    Console.WriteLine($"\n{bestRoute}");
                     Console.ResetColor();
                     Console.ReadKey();
                     Console.WriteLine("\n\nPlease a new route: [FROM-TO] - or type exit to finish");

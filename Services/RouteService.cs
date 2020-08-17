@@ -62,14 +62,20 @@ namespace Services
 
             var bestRoute = GetBestRoute();
 
+            if (bestRoute == null)
+            {
+                return "Ooopss... No route found!";
+            }
+
             List<string> result = new List<string>();
+
 
             foreach (var stop in bestRoute)
             {
                 result.Add(stop.getFrom());
             }
 
-            var sb = new StringBuilder();
+            var sb = new StringBuilder("Best route: ");
 
             foreach (var r in result)
             {
