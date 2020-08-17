@@ -20,7 +20,13 @@ namespace Services.Tests
         [Fact]
         public void Test1()
         {
-            Route route = _routeService.GetBestRoute("GRU", "CDG");
+            var bestRoute = _routeService.GetBestRoute("GRU", "CDG");
+
+            foreach (var item in bestRoute)
+            {
+                var x = item;
+                
+            }
 
           //  Console.WriteLine(route);
 
