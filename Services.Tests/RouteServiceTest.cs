@@ -22,13 +22,7 @@ namespace Services.Tests
         {
             var bestRoute = _routeService.GetBestRoute("GRU", "CDG");
 
-            foreach (var item in bestRoute)
-            {
-                var x = item;
-                
-            }
-
-          //  Console.WriteLine(route);
+            Assert.Equal("GRU - BRC - SCL - ORL - CDG", bestRoute);
 
             
         }
