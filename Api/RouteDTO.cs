@@ -1,21 +1,34 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Api
 {
-    public class Route
+    public class RouteDTO
     {
         [Required]
         [StringLength(3)]
-        private string From { get; set; }
+        public string From { get; set; }
 
         [Required]
         [StringLength(3)]
-        private string To { get; set; }
+        public string To { get; set; }
+
+        [Required]
+        public double Price { get; set; }
+
+        public double getPrice()
+        {
+            return this.Price;
+        }
+
+        public void setPrice(double Price)
+        {
+            this.Price = Price;
+        }
+
 
         public string getFrom()
         {
-            return this.From;
+            return this.From.ToUpper();
         }
 
         public void setFrom(string From)
@@ -25,7 +38,7 @@ namespace Api
 
         public string getTo()
         {
-            return this.To;
+            return this.To.ToUpper();
         }
 
         public void setTo(string To)

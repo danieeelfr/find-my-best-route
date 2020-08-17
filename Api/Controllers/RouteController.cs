@@ -3,6 +3,8 @@ using Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using Core.Models;
 
 namespace Api.Controllers
 {
@@ -24,11 +26,25 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public String GetBestRoute(String from, String to, String filePath = DEFAULT_FILE_PATH)
         {
-            // if (String.IsNullOrWhiteSpace(filePath))
-            // {
-            //     filePath = DEFAULT_FILE_PATH;
-            // }
             return _routeService.GetBestRoute(from.ToUpper(), to.ToUpper(), filePath);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public void AddRoute([FromBody] List<RouteDTO> routesDTO, String filePath = DEFAULT_FILE_PATH)
+        {
+            var routes = new List<Route>();
+
+            foreach (var item in routesDTO)
+            {
+                routes.Add(new Route() {
+                    From = item.getFrom(),
+                    To = item.getTo(),
+                    Price = item.getPrice()
+                });
+            }
+
+            _routeService.AddRoutes(routes, filePath);
         }
     }
 }
