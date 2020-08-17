@@ -11,8 +11,10 @@ namespace ConsoleApplication
 
             if (args.Length == 0)
             {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.Beep();
-                Console.WriteLine("\nPlease enter the route: [FROM-TO] - or type exit to finish");
+                Console.WriteLine("\nPlease try again passing the routes file path. \n> Example: dotnet run c:\\find-my-best-route\\Resources\\input-file.txt\n\n");
                 return;
             }
 
@@ -23,7 +25,7 @@ namespace ConsoleApplication
                 Console.WriteLine("\nPlease enter the route: [FROM-TO] - or type exit to finish");
                 var route = Console.ReadLine().ToUpper();
 
-                if (route.Equals("exit"))
+                if (route.Equals("EXIT"))
                 {
                     Console.WriteLine("\nFinished...");
                     break;
@@ -48,10 +50,8 @@ namespace ConsoleApplication
                         Console.ForegroundColor = ConsoleColor.White;
                     }
 
-                    Console.WriteLine($"\n{bestRoute}");
+                    Console.WriteLine($"\n{bestRoute}\n");
                     Console.ResetColor();
-                    Console.ReadKey();
-                    Console.WriteLine("\n\nPlease a new route: [FROM-TO] - or type exit to finish");
                 }
                 else
                 {

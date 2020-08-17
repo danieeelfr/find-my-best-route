@@ -1,12 +1,17 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api
 {
     public class Route
     {
-        public string From { get; set; }
+        [Required]
+        [StringLength(3)]
+        private string From { get; set; }
 
-        public string To { get; set; }
+        [Required]
+        [StringLength(3)]
+        private string To { get; set; }
 
         public string getFrom()
         {

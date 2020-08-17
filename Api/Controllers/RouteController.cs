@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace Api.Controllers
 {
@@ -12,6 +10,7 @@ namespace Api.Controllers
     [Route("[controller]")]
     public class RouteController : ControllerBase
     {
+        private const String DEFAULT_FILE_PATH = "Resources/input-file.txt";
         private readonly RouteService _routeService;
         private readonly ILogger<RouteController> _logger;
 
@@ -21,14 +20,15 @@ namespace Api.Controllers
             _routeService = new RouteService();
         }
 
-        [HttpPost]
-        public String GetBestRoute(Route route, String filePath)
+        [HttpGet("{from}/{to}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public String GetBestRoute(String from, String to, String filePath = DEFAULT_FILE_PATH)
         {
-            if (String.IsNullOrWhiteSpace(filePath)) {
-                
-                filePath = "Api/Resources/input-file.txt";
-            }
-           return _routeService.GetBestRoute(route.getFrom(), route.getTo(), filePath);
+            // if (String.IsNullOrWhiteSpace(filePath))
+            // {
+            //     filePath = DEFAULT_FILE_PATH;
+            // }
+            return _routeService.GetBestRoute(from.ToUpper(), to.ToUpper(), filePath);
         }
     }
 }
