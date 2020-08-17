@@ -77,6 +77,7 @@ namespace Services
             }
 
             sb.Append(to);
+            sb.Append($" > ${bestRoute.Sum(price => price.getPrice())}");
 
             return sb.ToString();
 

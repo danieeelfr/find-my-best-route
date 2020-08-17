@@ -21,7 +21,7 @@ namespace ConsoleApplication
                 var routeService = new RouteService();
 
                 Console.WriteLine("\nPlease enter the route: [FROM-TO] - or type exit to finish");
-                var route = Console.ReadLine();
+                var route = Console.ReadLine().ToUpper();
 
                 if (route.Equals("exit"))
                 {
