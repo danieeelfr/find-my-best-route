@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Api
 {
@@ -26,6 +27,23 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.DescribeAllParametersInCamelCase();
+                options.SwaggerDoc("v0", new OpenApiInfo
+                {
+                    Title = "RatesAPI (API 1)",
+                    Version = "v0",
+                    Description = "Softplan challenge",
+                    Contact = new OpenApiContact
+                    {
+                        Name = " Daniel Fonseca Reis",
+                        Email = "danielfonsecareis@gmail.com"
+                    }
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,11 +58,23 @@ namespace Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v0/swagger.json", "find-best-route-api");
             });
         }
     }
