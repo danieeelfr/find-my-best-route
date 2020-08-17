@@ -24,7 +24,6 @@ namespace Services.Tests
 
             Assert.Equal("GRU - BRC - SCL - ORL - CDG", bestRoute);
 
-            
         }
     }
 }
