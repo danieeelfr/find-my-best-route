@@ -10,6 +10,7 @@ namespace Services.Tests
 
     public class RouteServiceTest
     {
+        private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
         private readonly RouteService _routeService;
 
         public RouteServiceTest()
@@ -20,7 +21,7 @@ namespace Services.Tests
         [Fact]
         public void Test1()
         {
-            var bestRoute = _routeService.GetBestRoute("GRU", "CDG");
+            var bestRoute = _routeService.GetBestRoute("GRU", "CDG", FILE_PATH);
 
             Assert.Equal("GRU - BRC - SCL - ORL - CDG", bestRoute);
 
@@ -36,7 +37,7 @@ namespace Services.Tests
             route.setPrice(50);
 
             newRoutes.Add(route);
-            _routeService.AddRoutes(newRoutes);
+            _routeService.AddRoutes(newRoutes, FILE_PATH);
         }
     }
 }

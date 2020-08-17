@@ -14,7 +14,7 @@ namespace Services
     {
         // private const string FILE_PATH = "/home/daniel/Workspace/find-my-best-route/Resources/input-file.txt";
 
-        private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
+        // private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
 
         private readonly FileManager _fileManager;
         private Dictionary<List<Route>, double> possibleRoutes;
@@ -29,9 +29,9 @@ namespace Services
             _fileManager = new FileManager();
         }
 
-        public String GetBestRoute(String from, String to)
+        public String GetBestRoute(String from, String to, String filePath)
         {
-            allRoutes = GetAllRoutes(FILE_PATH);
+            allRoutes = GetAllRoutes(filePath);
 
             var directRoutes = allRoutes.FindAll(route =>
             {
@@ -151,11 +151,11 @@ namespace Services
             return result.FirstOrDefault().Key;
         }
 
-        public void AddRoutes(List<Route> routes)
+        public void AddRoutes(List<Route> routes, String filePath)
         {
             try
             {
-                StreamWriter sw = new StreamWriter(FILE_PATH, true, Encoding.ASCII);
+                StreamWriter sw = new StreamWriter(filePath, true, Encoding.ASCII);
                 foreach (var route in routes)
                 {
                     sw.NewLine = $"\n{route.getFrom()},{route.getTo()},{route.getPrice()}";
