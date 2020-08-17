@@ -33,7 +33,7 @@ namespace Api
 
         public void setFrom(string From)
         {
-            this.From = From;
+            this.From = From.ToUpper();
         }
 
         public string getTo()
@@ -43,7 +43,7 @@ namespace Api
 
         public void setTo(string To)
         {
-            this.To = To;
+            this.To = To.ToUpper();
         }
 
     }

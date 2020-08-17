@@ -17,9 +17,11 @@ namespace Services.Tests
         }
 
         [Theory]
-        [InlineData("GRU", "CDG", "GRU - BRC - SCL - ORL - CDG")]
-        // [InlineData(-4, -6, -10)]
-        // [InlineData(-2, 2, 0)]
+        [InlineData("GRU", "CDG", "Best route: GRU - BRC - SCL - ORL - CDG > $40")]
+        [InlineData("BRC", "SCL", "Best route: BRC - SCL > $5")]
+        [InlineData("GRU", "ORL", "Best route: GRU - BRC - SCL - ORL > $35")]
+        [InlineData("INV", "CDG", "Ooopss... No route found!")]
+        [InlineData("GRU", "INV", "Ooopss... No route found!")]
         public void GetBestRouteWithValidFileAndRoutesShouldReturnWithSuccess(string from, string to, string expected)
         {
             var bestRoute = _routeService.GetBestRoute(from, to, FILE_PATH);
