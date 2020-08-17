@@ -25,5 +25,18 @@ namespace Services.Tests
             Assert.Equal("GRU - BRC - SCL - ORL - CDG", bestRoute);
 
         }
+
+        [Fact]
+        public void Test2()
+        {
+            var newRoutes = new List<Route>();
+            var route = new Route();
+            route.setFrom("BRL");
+            route.setTo("ARG");
+            route.setPrice(50);
+
+            newRoutes.Add(route);
+            _routeService.AddRoutes(newRoutes);
+        }
     }
 }

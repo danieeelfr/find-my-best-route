@@ -82,7 +82,7 @@ namespace Services
             }
 
             sb.Append(to);
-            
+
             return sb.ToString();
 
 
@@ -151,22 +151,23 @@ namespace Services
             return result.FirstOrDefault().Key;
         }
 
-        // private void CalculatePrices() 
-        // {
-        //     foreach (var route in possibleRoutes)
-        //     {
-        //         double total = route.Key.Sum(stop => {
-        //             return stop.getPrice();
-        //         });
-
-        //         route.Value = total;
-
-        //     }
-        // }
-
         public void AddRoutes(List<Route> routes)
         {
-            throw new NotImplementedException();
+            try
+            {
+                StreamWriter sw = new StreamWriter(FILE_PATH, true, Encoding.ASCII);
+                foreach (var route in routes)
+                {
+                    sw.NewLine = $"\n{route.getFrom()},{route.getTo()},{route.getPrice()}";
+
+                    sw.WriteLine();
+                }
+                sw.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
         }
     }
 }
