@@ -12,12 +12,11 @@ namespace Infrastructure
         public List<string> GetFileData(String filepath)
         {
             List<string> data = new List<string>();
-
             String line;
+
             try
             {
                 StreamReader sr = new StreamReader(filepath);
-
                 line = sr.ReadLine();
 
                 while (line != null)
@@ -27,8 +26,9 @@ namespace Infrastructure
                 }
                 sr.Close();
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine("Exception: " + e.Message);
                 return null;
             }
 
@@ -43,18 +43,10 @@ namespace Infrastructure
 
                 foreach (var line in data)
                 {
-                    if (!append)
-                    {
-                        sw.Flush();
-                        sw.WriteLine($"{line}");
-                    }
-                    else
-                    {
-                        sw.NewLine = $"{line}";
-                        sw.WriteLine();
-                    }
+
+                    sw.WriteLine($"{line}");
                 }
-                
+
                 sw.Close();
             }
             catch (Exception e)

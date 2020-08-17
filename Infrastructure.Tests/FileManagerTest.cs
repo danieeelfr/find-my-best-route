@@ -31,7 +31,7 @@ namespace Infrastructure.Tests
         }
 
         [Fact]
-        public void GetFileDataWithInvalidFileShouldSaveWithSuccess()
+        public void AddDataWithValidFileShouldSaveWithSuccess()
         {
             List<string> originalData = new List<string>();
             originalData.Add("GRU,BRC,10");
@@ -46,7 +46,7 @@ namespace Infrastructure.Tests
             _fileManager.GetFileData(VALID_FILE_PATH);
 
             var dataAfter = _fileManager.GetFileData(VALID_FILE_PATH);
-            
+
             Assert.Equal(originalData.Count, dataAfter.Count);
 
         }
