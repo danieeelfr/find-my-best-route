@@ -18,4 +18,14 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup> 
+    <Content Include="Resources\**"> 
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
+    </Content> 
+  </ItemGroup>
+
+  <Target Name="CreateResourcesFolder" AfterTargets="AfterPublish">
+    <MakeDir Directories="$(PublishDir)Resources" Condition="!Exists('$(PublishDir)Resources')" /> 
+  </Target>
+
 </Project>

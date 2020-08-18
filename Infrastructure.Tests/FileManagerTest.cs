@@ -1,17 +1,11 @@
-using System.Diagnostics;
-using System;
 using Xunit;
-using Infrastructure;
-using Core;
-using Core.Models;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Infrastructure.Tests
 {
     public class FileManagerTest
     {
-        private const string VALID_FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
+        private const string VALID_FILE_PATH = "Resources/input-file.txt";
         private const string INVALID_FILE_PATH = "/invalid/input-file.txt";
 
         private readonly FileManager _fileManager;
