@@ -3,6 +3,7 @@
 ## Solution overview
 
 ![overview](Resources/overview.png)
+![folders](Resources/folders_struct.png)
 
 ## Running the Console application
 #### * ensure that the file path is correct
