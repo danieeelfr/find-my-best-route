@@ -4,21 +4,6 @@
 
 ![overview](Resources/overview.png)
 
-## Quality assurance
-
-### Coverage report
-
-![devcoverageops](Resources/Img/coverageapi1.png)
-
-## Running tests
-
-### Unit tests 
-#### testing Services and Infrastructure layers
-
-```
-dotnet test
-```
-
 ## Running the Console application
 #### * ensure that the file path is correct
 
@@ -60,11 +45,17 @@ curl -X GET "https://localhost:5001/Route/bhz/bru?filePath=Resources/input-file.
 ```
 Best route: BHZ - BRU > $10
 ```
+## Running tests
+
+### Unit tests 
+#### testing Services and Infrastructure layers
+
+```
+dotnet test
+```
 
 ## Built With
-
 * .NET Core 3.1
-* .NET Tools
 * C#
 * GitHub
 * Swagger
