@@ -58,6 +58,13 @@ dotnet test
 ```
 ![testing](Resources/tests_demo1.gif)
 
+## Continuous integration 
+### GitHub Actions
+```
+.github/workflows/dotnet-core.yml
+```
+![ci](Resources/ci-demo01.png)
+
 ## Built With
 * .NET Core 3.1
 * C#
