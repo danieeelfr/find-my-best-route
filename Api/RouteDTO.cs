@@ -25,7 +25,6 @@ namespace Api
             this.Price = Price;
         }
 
-
         public string getFrom()
         {
             return this.From.ToUpper();

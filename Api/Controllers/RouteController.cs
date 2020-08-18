@@ -1,7 +1,6 @@
 ﻿using System;
 using Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Core.Models;
@@ -14,11 +13,9 @@ namespace Api.Controllers
     {
         private const String DEFAULT_FILE_PATH = "Resources/input-file.txt";
         private readonly RouteService _routeService;
-        private readonly ILogger<RouteController> _logger;
 
-        public RouteController(ILogger<RouteController> logger)
+        public RouteController()
         {
-            _logger = logger;
             _routeService = new RouteService();
         }
 
