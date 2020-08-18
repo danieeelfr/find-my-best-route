@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace Core.Models
 {
@@ -47,6 +43,5 @@ namespace Core.Models
             return $"{this.From} {this.To} {this.Price}";
         }
 
-         
     }
 }

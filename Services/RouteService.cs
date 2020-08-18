@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Core.Services;
-using System.IO;
 using System.Text;
 using Core.Models;
 using Infrastructure;
@@ -12,9 +10,6 @@ namespace Services
 {
     public class RouteService : IRouteService
     {
-        // private const string FILE_PATH = "/home/daniel/Workspace/find-my-best-route/Resources/input-file.txt";
-        // private const string FILE_PATH = "/home/danielfr/Workspace/Pessoais/Challenges/find-my-best-route/Resources/input-file.txt";
-
         private readonly FileManager _fileManager;
         private Dictionary<List<Route>, double> possibleRoutes;
         private List<Route> partialRoutes;
@@ -27,15 +22,32 @@ namespace Services
 
         public String GetBestRoute(String from, String to, String filePath)
         {
+            partialRoutes = new List<Route>();
+            possibleRoutes = new Dictionary<List<Route>, double>();
+
             allRoutes = GetAllRoutes(filePath);
 
+            CheckDirectRoutes(from, to);
+
+            CheckPartialRoutes(from, to);
+
+            var bestRoute = IdentifyTheBestRoute();
+
+            if (bestRoute == null)
+                return "Ooopss... No route found!";
+
+            StringBuilder output = BuildOutput(to, bestRoute);
+
+            return output.ToString();
+
+        }
+
+        private void CheckDirectRoutes(string from, string to)
+        {
             var directRoutes = allRoutes.FindAll(route =>
             {
                 return route.getFrom().Equals(from) && route.getTo().Equals(to);
             });
-
-            partialRoutes = new List<Route>();
-            possibleRoutes = new Dictionary<List<Route>, double>();
 
             foreach (var directRoute in directRoutes)
             {
@@ -43,7 +55,10 @@ namespace Services
                 possibleRoutes.Add(new List<Route>(partialRoutes), directRoute.getPrice());
                 partialRoutes.Clear();
             }
+        }
 
+        private void CheckPartialRoutes(string from, string to)
+        {
             var startRoutes = allRoutes.FindAll(route =>
             {
                 return route.getFrom().Equals(from);
@@ -52,23 +67,16 @@ namespace Services
             foreach (var route in startRoutes)
             {
                 if (route.getFrom().Equals(from) && route.getTo().Equals(to))
-                {
                     continue;
-                }
 
                 partialRoutes.Add(route);
-                GetNextConnection(from, to, route);
+                SetConnections(from, to, route);
             }
+        }
 
-            var bestRoute = GetBestRoute();
-
-            if (bestRoute == null)
-            {
-                return "Ooopss... No route found!";
-            }
-
+        private static StringBuilder BuildOutput(string to, List<Route> bestRoute)
+        {
             List<string> result = new List<string>();
-
 
             foreach (var stop in bestRoute)
             {
@@ -84,25 +92,17 @@ namespace Services
 
             sb.Append(to);
             sb.Append($" > ${bestRoute.Sum(price => price.getPrice())}");
-
-            return sb.ToString();
-
+            return sb;
         }
 
-        private void GetNextConnection(String from, String to, Route route)
+        private void SetConnections(String from, String to, Route route)
         {
-
-            var connections = allRoutes.FindAll(r =>
-            {
-                return r.getFrom().Equals(route.getTo());
-            });
+            var connections = GetConnections(route);
 
             foreach (var connection in connections)
             {
                 if (connection.getFrom().Equals(from) && connection.getTo().Equals(to))
-                {
                     return;
-                }
 
                 if (connection.getTo().Equals(to))
                 {
@@ -120,9 +120,17 @@ namespace Services
                         To = connection.getTo(),
                         Price = connection.getPrice()
                     });
-                    GetNextConnection(from, to, connection);
+                    SetConnections(from, to, connection);
                 }
             }
+        }
+
+        private List<Route> GetConnections(Route route)
+        {
+            return allRoutes.FindAll(r =>
+            {
+                return r.getFrom().Equals(route.getTo());
+            });
         }
 
         private List<Route> GetAllRoutes(String filepath)
@@ -143,7 +151,7 @@ namespace Services
             return routes;
         }
 
-        private List<Route> GetBestRoute()
+        private List<Route> IdentifyTheBestRoute()
         {
             var result = possibleRoutes.OrderBy(route => route.Value);
 

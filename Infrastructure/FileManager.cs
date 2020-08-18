@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Core;
-using Core.Models;
 using System.Collections.Generic;
 
 namespace Infrastructure
@@ -43,7 +41,6 @@ namespace Infrastructure
 
                 foreach (var line in data)
                 {
-
                     sw.WriteLine($"{line}");
                 }
 
