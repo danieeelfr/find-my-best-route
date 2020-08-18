@@ -48,7 +48,7 @@ curl -X GET "https://localhost:5001/Route/bhz/bru?filePath=Resources/input-file.
 ```
 Best route: BHZ - BRU > $10
 ```
-## Running tests
+## Quality assurance
 
 ### Unit tests 
 #### testing Services and Infrastructure layers
@@ -57,6 +57,32 @@ Best route: BHZ - BRU > $10
 dotnet test
 ```
 ![testing](Resources/tests_demo1.gif)
+
+### Code coverage
+#### collect code coverage
+```
+MSYS2_ARG_CONV_EXCL="*" dotnet test --no-build \     
+  --configuration Release \
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=cobertura \
+  /p:CoverletOutput=./TestResults/Coverage/
+```
+
+```
+dotnet tool run reportgenerator \
+  -reports:Services.Tests/TestResults/Coverage/coverage.cobertura.xml \
+  -targetdir:./CodeCoverage \
+  -reporttypes:HtmlInline_AzurePipelines
+```
+
+```
+dotnet tool run reportgenerator \
+  -reports:Infrastructure.Tests/TestResults/Coverage/coverage.cobertura.xml \
+  -targetdir:./CodeCoverage \
+  -reporttypes:HtmlInline_AzurePipelines
+```
+
+![coverage](Resources/coverage-demo1.png)
 
 ## Continuous integration 
 ### GitHub Actions
@@ -72,3 +98,6 @@ dotnet test
 * Swagger
 * Ubuntu 18.3
 * Visual Studio Code
+
+
+
