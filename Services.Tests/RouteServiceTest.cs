@@ -8,7 +8,7 @@ namespace Services.Tests
 {
     public class RouteServiceTest
     {
-        private const string FILE_PATH = "Resources/input-file.txt";
+        private const string FILE_PATH = "input-file.txt";
         private readonly RouteService _routeService;
 
         public RouteServiceTest()

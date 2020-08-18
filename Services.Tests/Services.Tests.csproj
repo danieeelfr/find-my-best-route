@@ -20,7 +20,7 @@
 
   
   <ItemGroup> 
-    <Content Include="Resources\**"> 
+    <Content Include="..\Resources\input-file.txt"> 
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> 
     </Content> 
   </ItemGroup>
