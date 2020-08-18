@@ -34,9 +34,9 @@ namespace Api
                 options.DescribeAllParametersInCamelCase();
                 options.SwaggerDoc("v0", new OpenApiInfo
                 {
-                    Title = "RatesAPI (API 1)",
+                    Title = "Bexs challenge",
                     Version = "v0",
-                    Description = "Softplan challenge",
+                    Description = "find-my-best-route",
                     Contact = new OpenApiContact
                     {
                         Name = " Daniel Fonseca Reis",
